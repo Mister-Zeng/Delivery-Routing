@@ -49,41 +49,53 @@ def getAddress(address):
 
 # Create 3 trucks with initial package assignment
 truck1 = Truck("4001 South 700 East", 16, datetime.timedelta(hours=8), 0.0,
-               [1, 13, 14, 15, 16, 20, 29, 30, 31, 34, 37, 40], 18)
+               [1, 13, 14, 15, 16, 19, 20, 29, 30, 31, 34, 37, 40], 18, 1)
 truck2 = Truck("4001 South 700 East", 16, datetime.timedelta(hours=10, minutes=20), 0.0,
-               [3, 6, 12, 17, 18, 19, 21, 22, 23, 24, 26, 27, 35, 36, 38, 39], 18)
+               [3, 9, 12, 17, 18, 21, 22, 23, 24, 26, 27, 35, 36, 38, 39], 18, 2)
 truck3 = Truck("4001 South 700 East", 16, datetime.timedelta(hours=9, minutes=5), 0.0,
-               [2, 4, 5, 6, 7, 8, 9, 10, 11, 25, 28, 32, 33], 18)
+               [2, 4, 5, 6, 7, 8, 10, 11, 25, 28, 32, 33], 18, 3)
 
 
 # Function to deliver packages for a given truck using a nearest neighbor algorithms
 def deliverPackage(truck):
     # Get the list of packages to be delivered from the truck
-    notDelivered = [packageData.lookup(packageID) for packageID in truck.packages]
+    notDelivered = []
+
+    for packageID in truck.packages:
+        package = packageData.lookup(packageID)
+        notDelivered.append(package)
 
     # Clear the package list of the truck for depopulation in the order of nearest neighbors
     truck.packages.clear()
 
     # Iterate until all packages are delivered
     while notDelivered:
-        currentLocation = getAddress(truck.address)
-
         # Find the nearest neighbor based on distance
-        nextPackage = min(notDelivered, key=lambda package: distanceBetweenAddress(currentLocation,
-                                                                                   getAddress(package.address)))
+        nextAddress = 9999
+        nextPackage = None
+
+        for package in notDelivered:
+            if distanceBetweenAddress(getAddress(truck.address), getAddress(package.address)) <= nextAddress:
+                nextAddress = distanceBetweenAddress(getAddress(truck.address), getAddress(package.address))
+                nextPackage = package
+                # Update package 9 to the right address
+                if nextPackage.ID == "9":
+                    nextPackage.address = "410 S State St"
+                    nextPackage.city = "Salt Lake City"
+                    nextPackage.state = "UT"
+                    nextPackage.zipCode = "84111"
+
         # Add the next closest package to the truck package list
         truck.packages.append(nextPackage.ID)
 
         # Remove the same package from the not_delivered list
         notDelivered.remove(nextPackage)
 
-        # Update the truck's current location to the package's address
-        distance = distanceBetweenAddress(getAddress(truck.address), getAddress(nextPackage.address))
-        truck.miles += distance
-
-        # Update the truck's current location to the package's address
-        truck.address, truck.departTime = nextPackage.address, truck.departTime + datetime.timedelta(
-            hours=distance / truck.speed)
+        # Update the truck's miles, address, truck time, and the truck that the package is loaded on
+        truck.miles += nextAddress
+        truck.address = nextPackage.address
+        nextPackage.truckNumber = truck.truckNumber
+        truck.time += datetime.timedelta(hours=nextAddress / truck.speed)
 
         # Update the delivery and departure times for the next package
         nextPackage.deliveryTime, nextPackage.departTime = truck.time, truck.departTime
