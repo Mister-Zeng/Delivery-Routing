@@ -1,3 +1,6 @@
+import datetime
+
+
 class Package:
     def __init__(self, ID, address, city, state, zipcode, deadline, weight, status):
         self.ID = ID
@@ -24,9 +27,17 @@ class Package:
                                          self.weight, self.status, self.truckNumber)
 
     def updateStatus(self, updatedTime):
-        if self.deliveryTime <= updatedTime:
-            self.status = "Delivered"
-        elif self.departTime >= updatedTime:
+        if self.deliveryTime is None or updatedTime < self.departTime:
+            self.status = "At Hub"
+        elif self.deliveryTime >= updatedTime:
             self.status = "En-Route"
         else:
-            self.status = "At Hub"
+            self.status = "Delivered"
+
+        # Update package 9 with correct address on 10:20
+        if self.ID == "9":
+            if updatedTime >= datetime.timedelta(hours=10, minutes=20):
+                self.address = "410 S State St"
+                self.city = "Salt Lake City"
+                self.state = "UT"
+                self.zipcode = "84111"

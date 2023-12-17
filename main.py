@@ -49,11 +49,11 @@ def getAddress(address):
 
 # Create 3 trucks with initial package assignment
 truck1 = Truck("4001 South 700 East", 16, datetime.timedelta(hours=8), 0.0,
-               [1, 13, 14, 15, 16, 19, 20, 29, 30, 31, 34, 37, 40], 18, 1)
+               [1, 13, 14, 15, 16, 19, 20, 29, 30, 31, 34, 37, 40, 11, 33], 18, 1)
 truck2 = Truck("4001 South 700 East", 16, datetime.timedelta(hours=10, minutes=20), 0.0,
-               [3, 9, 12, 17, 18, 21, 22, 23, 24, 26, 27, 35, 36, 38, 39], 18, 2)
+               [3, 18, 36, 38, 9, 12, 17, 21, 22, 23, 24, 26, 27, 35, 39], 18, 2)
 truck3 = Truck("4001 South 700 East", 16, datetime.timedelta(hours=9, minutes=5), 0.0,
-               [2, 4, 5, 6, 7, 8, 10, 11, 25, 28, 32, 33], 18, 3)
+               [2, 4, 5, 6, 7, 8, 10, 25, 28, 32], 18, 3)
 
 
 # Function to deliver packages for a given truck using a nearest neighbor algorithms
@@ -78,12 +78,6 @@ def deliverPackage(truck):
             if distanceBetweenAddress(getAddress(truck.address), getAddress(package.address)) <= nextAddress:
                 nextAddress = distanceBetweenAddress(getAddress(truck.address), getAddress(package.address))
                 nextPackage = package
-                # Update package 9 to the right address
-                if nextPackage.ID == "9":
-                    nextPackage.address = "410 S State St"
-                    nextPackage.city = "Salt Lake City"
-                    nextPackage.state = "UT"
-                    nextPackage.zipCode = "84111"
 
         # Add the next closest package to the truck package list
         truck.packages.append(nextPackage.ID)
@@ -104,7 +98,6 @@ def deliverPackage(truck):
 # Deliver packages for each truck
 deliverPackage(truck1)
 deliverPackage(truck2)
-truck3.departTime = min(truck1.time, truck2.time)
 deliverPackage(truck3)
 
 

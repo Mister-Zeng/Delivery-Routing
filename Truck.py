@@ -11,6 +11,5 @@ class Truck:
         self.truckNumber = truckNumber
 
     def __str__(self):
-        return "%s, %s, %s, %s, %s, %s" % (self.address, self.capacity, self.departTime, self.miles, self.packages,
-                                           self.speed)
-
+        return "%s, %s, %s, %s, %s, %s, %s" % (self.address, self.capacity, self.departTime, self.miles, self.packages,
+                                               self.speed, self.truckNumber)
