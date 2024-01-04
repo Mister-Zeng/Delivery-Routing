@@ -1,35 +1,46 @@
-# WGUPS
+# WGUPS 
 
-## SCENARIO
-This task is the implementation phase of the WGUPS Routing Program.
+## Overview
+The WGUPS  Program is a Python-based solution designed to address the routing and delivery challenges faced by WGUPS. The primary goal of the project is to determine efficient routes and distribution for daily local deliveries (DLD), ensuring on-time delivery of 40 packages with specific criteria and constraints.
 
+## Algorithm
+The project employs a nearest neighbor algorithm to optimize the delivery routes. The algorithm prioritizes selecting the nearest neighbor (package) at each step, minimizing the overall travel distance and ensuring timely deliveries. This heuristic approach is effective for solving vehicle routing problems, especially when finding an optimal solution is computationally expensive.
 
-The Western Governors University Parcel Service (WGUPS) needs to determine an efficient route and delivery distribution 
-for their daily local deliveries (DLD) because packages are not currently being consistently delivered by their promised 
-deadline. The Salt Lake City DLD route has three trucks, two drivers, and an average of 40 packages to deliver each day. 
-Each package has specific criteria and delivery requirements that are listed in the attached “WGUPS Package File.”
- 
+## Features
+1. Efficient Routing Algorithm:
+- Implemented a routing algorithm using the nearest neighbor heuristic.
+- Ensured on-time delivery of all 40 packages while limiting the combined total distance traveled by two trucks to under 140 miles.
 
-Your task is to determine an algorithm, write code, and present a solution where all 40 packages will be delivered on 
-time while meeting each package’s requirements and keeping the combined total distance traveled under 140 miles for two 
-of the trucks. The specific delivery locations are shown on the attached “Salt Lake City Downtown Map,” and distances to 
-each location are given in the attached “WGUPS Distance Table.” The intent is to use the program for this specific 
-location and also for many other cities in each state where WGU has a presence. As such, you will need to include 
-detailed comments to make your code easy to follow and to justify the decisions you made while writing your scripts.
+2. Object-Oriented Design:
+- Developed a modular and maintainable solution using object-oriented design principles.
+- Created classes such as Package, PackageHashTable, and Truck to encapsulate data and functionality, promoting code reusability.
 
+3. User-Friendly Package Tracking System:
+- Integrated a user-friendly package tracking system to monitor the progress of each truck and its packages.
+- Provided the supervisor with visibility into the status of packages at assigned points, enhancing overall logistics management.
 
-The supervisor should be able to see, at assigned points, the progress of each truck and its packages by any of the 
-variables listed in the “WGUPS Package File,” including what has been delivered and at what time the delivery occurred.
+## Assumptions and Constraints
+The project carefully considered and managed various assumptions and constraints, including:
 
+- Maximum package capacity per truck.
+- Driver-truck assignments and departure/loading times.
+- Instantaneous delivery and loading times.
+- Special case handling for package #9 address correction at 10:20 a.m.
 
-## ASSUMPTIONS
-- Each truck can carry a maximum of 16 packages, and the ID number of each package is unique.
-- The trucks travel at an average speed of 18 miles per hour and have an infinite amount of gas with no need to stop.
--  There are no collisions.
--  Three trucks and two drivers are available for deliveries. Each driver stays with the same truck as long as that truck is in service.
--  Drivers leave the hub no earlier than 8:00 a.m., with the truck loaded, and can return to the hub for packages if needed.
--  The delivery and loading times are instantaneous (i.e., no time passes while at a delivery or when moving packages to a truck at the hub). This time is factored into the calculation of the average speed of the trucks.
--  There is up to one special note associated with a package.
--  The delivery address for package #9, Third District Juvenile Court, is wrong and will be corrected at 10:20 a.m. WGUPS is aware that the address is incorrect and will be updated at 10:20 a.m. However, WGUPS does not know the correct address (410 S. State St., Salt Lake City, UT 84111) until 10:20 a.m.
--  The distances provided in the “WGUPS Distance Table” are equal regardless of the direction traveled.
--  The day ends when all 40 packages have been delivered.
+## Usage
+1. CSV Data Loading:
+- Ensure CSV files (address.csv, distance.csv, package.csv) are available in the designated csv directory.
+- Run the program to load package data and initialize the routing system.
+
+2. Algorithm Execution:
+- The program employs a nearest neighbor algorithm to optimize package delivery.
+- Trucks are assigned packages based on the algorithm, ensuring efficient and on-time deliveries.
+
+3. Package Tracking:
+- Users can check the status of packages at specific times using the provided interface.
+- Enter a time in the format HH:MM to view the status of individual or all packages.
+
+## Author
+- Email - [Jason Zeng](mailto:officialjasonzeng@gmail.com?subject=[GitHub]%20iFitness%20App)
+- Website - [Jason Zeng](https://mister-zeng.github.io/Portfolio-Website/)
+- Twitter - [Misterzeng](https://www.twitter.com/misterzeng)

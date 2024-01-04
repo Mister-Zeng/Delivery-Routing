@@ -27,7 +27,7 @@ class Package:
                                          self.weight, self.status, self.truckNumber)
 
     def updateStatus(self, updatedTime):
-        if self.deliveryTime is None or updatedTime < self.departTime:
+        if self.deliveryTime is None or updatedTime < self.departureTime:
             self.status = "At Hub"
         elif self.deliveryTime >= updatedTime:
             self.status = "En-Route"
@@ -41,3 +41,9 @@ class Package:
                 self.city = "Salt Lake City"
                 self.state = "UT"
                 self.zipcode = "84111"
+
+        # Package 6, 25, 28, 32 are on flight until 9:05
+        if self.ID == "6" or self.ID == "25" or self.ID == "28" or self.ID == "32":
+            if updatedTime < datetime.timedelta(hours=9, minutes=5):
+                self.status = "On Flight"
+                self.truckNumber = None

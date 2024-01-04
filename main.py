@@ -1,6 +1,3 @@
-# Author: Jason Zeng
-# Student ID: 011745518
-
 import csv
 import datetime
 
@@ -59,14 +56,7 @@ truck3 = Truck("4001 South 700 East", 16, datetime.timedelta(hours=9, minutes=5)
 # Function to deliver packages for a given truck using a nearest neighbor algorithms
 def deliverPackage(truck):
     # Get the list of packages to be delivered from the truck
-    notDelivered = []
-
-    for packageID in truck.packages:
-        package = packageData.lookup(packageID)
-        notDelivered.append(package)
-
-    # Clear the package list of the truck for depopulation in the order of nearest neighbors
-    truck.packages.clear()
+    notDelivered = [packageData.lookup(packageID) for packageID in truck.packages]
 
     # Iterate until all packages are delivered
     while notDelivered:
@@ -92,7 +82,7 @@ def deliverPackage(truck):
         truck.time += datetime.timedelta(hours=nextAddress / truck.speed)
 
         # Update the delivery and departure times for the next package
-        nextPackage.deliveryTime, nextPackage.departTime = truck.time, truck.departTime
+        nextPackage.deliveryTime, nextPackage.departureTime = truck.time, truck.departureTime
 
 
 # Deliver packages for each truck
